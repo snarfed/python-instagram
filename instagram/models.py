@@ -84,6 +84,13 @@ class Media(ApiModel):
             for tag in entry['tags']:
                 new_media.tags.append(Tag.object_from_dictionary({'name': tag}))
 
+        if entry.get('users_in_photo'):
+            new_media.users_in_photo = []
+            for user in entry['users_in_photo']:
+                new_media.users_in_photo.append(UserInPhoto(
+                        User.object_from_dictionary(user['user']),
+                        Position.object_from_dictionary(user['position'])))
+
         new_media.link = entry['link']
 
         new_media.filter = entry.get('filter')
@@ -99,6 +106,25 @@ class Tag(ApiModel):
 
     def __unicode__(self):
         return "Tag: %s" % self.name
+
+
+class UserInPhoto(ApiModel):
+    def __init__(self, user, position):
+        self.user = user
+        self.position = position
+
+    def __unicode__(self):
+        return "UserInPhoto: %s" % self.name
+
+
+class Position(ApiModel):
+    def __init__(self, **kwargs):
+        self.name = name
+        for key, value in kwargs.iteritems():
+            setattr(self, key, value)
+
+    def __unicode__(self):
+        return "Position: %s" % self.name
 
 
 class Comment(ApiModel):
