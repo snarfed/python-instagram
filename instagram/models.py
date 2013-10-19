@@ -114,17 +114,16 @@ class UserInPhoto(ApiModel):
         self.position = position
 
     def __unicode__(self):
-        return "UserInPhoto: %s" % self.name
+        return "UserInPhoto: %s" % self.user.username
 
 
 class Position(ApiModel):
     def __init__(self, **kwargs):
-        self.name = name
         for key, value in kwargs.iteritems():
             setattr(self, key, value)
 
     def __unicode__(self):
-        return "Position: %s" % self.name
+        return "Position: (%s, %s)" % (self.x, self.y)
 
 
 class Comment(ApiModel):
