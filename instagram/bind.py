@@ -97,7 +97,7 @@ def bind_method(**config):
             try:
                 content_obj = simplejson.loads(content)
             except ValueError:
-                raise InstagramClientError('Unable to parse response, not valid JSON.')
+                raise InstagramClientError('Unable to parse response, not valid JSON: %s' % content)
 
             api_responses = []
             status_code = content_obj['meta']['code']
